@@ -1,10 +1,27 @@
 #include "Cu29_Library.h"
-#include <xc.h>
-
-void WriteDAQ(short WriteValue);
 
 void main(void)
 {
+
+  //Incomplete new main function. Ultimately want to use this.
+  if(0)
+  {
+    //Initial Setup Functions
+    DAC_Setup(); //Analog output -> to filter, pre-amp, etc.
+    ADC_Setup(); //Configures inputs for CV, Gate, ADSR inputs
+
+    //Main loop
+    while (1)
+    {
+
+    }
+  }
+
+
+  //Bits and pieces from PIC Labs. Ultimately want to get rid of this.
+  if (1)
+  {
+
      if(1)
     {
         BSR = 0xB;
@@ -17,7 +34,7 @@ void main(void)
      TRISCbits.TRISC7 = 0;
      TRISCbits.TRISC6 = 1;
 
-    //Configure Timer2 to have a period of 100 microseconds.
+
     ConfigureTimer2(1000,0x0b);
     int prev = 0;
     char time = 1000;
@@ -27,17 +44,17 @@ void main(void)
     //This loop runs based on Timer2 rather than __delay_ms or __delay_us
     while(1)
     {
-        // if(PORTCbits.RC6 != prevstate && PORTCbits.RC6 != 1)
-        // {   if(button==2)
-        //         button = 0;
-        //     else button++;
-        // }
+        if(PORTCbits.RC6 != prevstate && PORTCbits.RC6 != 1)
+        {   if(button==2)
+                button = 0;
+            else button++;
+        }
 
-        // prevstate = PORTCbits.RC6;
-        // test = PORTCbits.RC6;
+        prevstate = PORTCbits.RC6;
+        test = PORTCbits.RC6;
 
-        // Call the SineArray function to make sure it runs quickly
-        // enough not to stall the DAC output.
+        Call the SineArray function to make sure it runs quickly
+        enough not to stall the DAC output.
         if(prev!= test && test != 0)
         {
             time = FreqArray();
@@ -49,13 +66,13 @@ void main(void)
         short x;
         x = SineArray();
 
-        // if(button == 0)
-        //     x = SineArray();
-        // else if(button == 1)
-        //     x = SquareArray();
-        // else
-        //     x = SawArray();
-        //short x = SquareArray();
+        if(button == 0)
+            x = SineArray();
+        else if(button == 1)
+            x = SquareArray();
+        else
+            x = SawArray();
+        short x = SquareArray();
 
         WriteDAQ(x);
 
@@ -67,14 +84,7 @@ void main(void)
 
     }
 
-    return;
-}
+  }
 
-void WriteDAQ(short WriteValue)
-{
-    char c = WriteValue & 0xFF;
-    DAC1REFL = c;
-    char d = WriteValue >> 8;
-    DAC1REFH = d;
-    DAC1LD =1;
+    return;
 }

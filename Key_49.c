@@ -1,13 +1,10 @@
 #include "Cu29_Library.h"
-#include <xc.h>
 
-// Requires: Integer input representing a key, ranging from 16 to 64
+// Requires: Short type input representing a key, ranging from 16 to 64
 // Promises: Uses "Configure_Timer" to output a frequency corresponding
 //           to the given note, returns a sample rate scaler (1, 2, 4) for
 //           use with oscillator functions.
-
-int 49_key (int n)
-
+int 49_key (short n)
 {
   switch (n)
   ​{
@@ -263,10 +260,8 @@ int 49_key (int n)
 
 // Requires: Input voltage (1-5V) from ADC, 8-bit char.
 // Promises: Integer n, with 16 <=n <= 64.
-
 int ADC_to_key (char v_in)
 {
-
   v_in =
 
   int n;
@@ -302,5 +297,4 @@ int ADC_to_key (char v_in)
   }
 
   return n;
-
 }

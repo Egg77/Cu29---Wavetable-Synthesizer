@@ -1,11 +1,10 @@
 #include "Cu29_Library.h"
-#include <xc.h>
 
 //Requires: A sample-rate scaler, input values either 1, 2, 4
 //Promises: Values corresponding to a sine waveform
 short SineArray(int samples)
 {
-    static char ArrayIndex = 0;
+   static char ArrayIndex = 0;
    const short Array [] =
     {   128,131,134,137,140,143,146,149,152,155,158,162,165,167,170,173,176,179,
     182,185,188,190,193,196,198,201,203,206,208,211,213,215,218,220,222,224,226,
@@ -33,7 +32,7 @@ short SineArray(int samples)
 //Promises: Values corresponding to a square waveform
 short SquareArray(int samples)
 {
-    static char ArrayIndex = 0;
+   static char ArrayIndex = 0;
    const short Array [] =
    {
     255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,
@@ -60,7 +59,7 @@ short SquareArray(int samples)
 //Promises: Values corresponding to a sawtooth waveform
 short SawArray(int samples)
 {
-    static char ArrayIndex = 0;
+   static char ArrayIndex = 0;
    const short Array [] =
    {
        0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,
@@ -99,5 +98,4 @@ short FreqArray(void)
 
     // Return the next array value and increment the index.
     return Array[ArrayIndex++];
-
 }
