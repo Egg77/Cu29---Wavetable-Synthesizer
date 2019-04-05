@@ -11,23 +11,26 @@
 #include <xc.h>
 #include <math.h>
 
+#define _XTAL_FREQ 32000000
+
 //Timer:
 void ConfigureTimer2(char TimerPeriod_us, char Scalers);
 
 //Setup ADC for reading and write to DAC functions
-void ADC_Setup();
-void DAC_Setup();
+void ADC_Setup(void);
+int ADC_CV_Loop(void);
+void DAC_Setup(void);
 void WriteDAQ(short WriteValue);
 
 //Oscillators:
 short FreqArray(void);
-short SineArray(void);
-short SquareArray(void);
-short SawArray(void);
+short SineArray(int samples);
+short SquareArray(int samples);
+short SawArray(int samples);
 
 //Key_49 Functions - Converts ADC input to keys, scales timer2 to key frequencies
-int 49_key (short n);
-int ADC_to_key (char v_in);
+int key_49 (short n);
+int ADC_to_key (int ADC_CV);
 
 //ADSR Envelope Generator Functions - Controls on/off key signal and Envelope
 void ADSR (short ADC_GATE);
