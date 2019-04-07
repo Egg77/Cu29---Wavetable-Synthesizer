@@ -1,5 +1,6 @@
 #include "Cu29_Library.h"
 
+// Adapted from Lab2_Time.c, provided in ENCM 369 PIC Lab 2 at the University of Calgary
 // REQUIRES: Nothing
 // PROMISES: Set the system clock speed to 32MHz.
 //           Configure Timer2 to trigger with the given period in microseconds.

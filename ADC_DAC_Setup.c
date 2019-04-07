@@ -4,7 +4,6 @@
 //Promises: Sets up ADC
 void ADC_Setup(void)
 {
-
   //Pin RA0, Channel 0:
   TRISAbits.TRISA0 = 1; //Disable PIN RA0 output driver
   ANSA0 = 1; //Configure PIN RA0 as analog
@@ -16,7 +15,6 @@ void ADC_Setup(void)
   ADCON1 = 0b11000000; //Right justify, set conversion clock to F_osc/64,
                        //negative reference to V_ss, positive reference to V_dd
   ADCON0bits.ADON = 1; //Turn on ADC peripheral
-
 }
 
 //Requires: Nothing.
@@ -47,8 +45,6 @@ void DAC_Setup(void)
     BSR = 0xB;
     DAC1CON0 = 0xA0;
     TRISA = 0xFE;
-
-
 }
 
 //Requires: Short type value to write to DAC1

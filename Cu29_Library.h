@@ -11,6 +11,7 @@
 #include <xc.h>
 #include <math.h>
 
+//Define Clock Frequency of 32MHz
 #define _XTAL_FREQ 32000000
 
 //Timer:

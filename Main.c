@@ -2,8 +2,6 @@
 
 void main(void)
 {
-
-  //Incomplete new main function. Ultimately want to use this.
   if(1)
   {
     //Initial Setup Functions

@@ -20,10 +20,8 @@ short SineArray(int samples)
     90,93,97,100,103,106,109,112,115,118,121,124
    };
 
-    // If the index exceeds the array, reset it.
     if (ArrayIndex >= 255) ArrayIndex = 0;
 
-    // Return the next array value and increment the index.
     return Array[ArrayIndex += samples];
 
 }
@@ -48,10 +46,8 @@ short SquareArray(int samples)
     0,0,0,0
    };
 
-    // If the index exceeds the array, reset it.
     if (ArrayIndex >= 255) ArrayIndex = 0;
 
-    // Return the next array value and increment the index.
     return Array[ArrayIndex += samples];
 }
 
@@ -77,25 +73,21 @@ short SawArray(int samples)
        254,255
    };
 
-    // If the index exceeds the array, reset it.
     if (ArrayIndex >= 255) ArrayIndex = 0;
 
-    // Return the next array value and increment the index.
     return Array[ArrayIndex += samples];
 }
 
+//Currently Unused - Delete if it doesn't seem necessary.
 short FreqArray(void)
 {
-    // Static variables are only initialized the first time. They otherwise
-    // keep their values each time a function is called.
     static char ArrayIndex = 0;
     const short Array[] =
         { 45.45, 42.90, 40.50, 38.22, 36.07,
           34.05, 32.14, 30.33, 28.63,
           27.03, 25.51, 24.08,  22.73};
-    // If the index exceeds the array, reset it.
+
     if (ArrayIndex == 13) ArrayIndex = 0;
 
-    // Return the next array value and increment the index.
     return Array[ArrayIndex++];
 }
