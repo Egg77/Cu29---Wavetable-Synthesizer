@@ -9,7 +9,7 @@ void main(void)
     //Initial Setup Functions
     DAC_Setup(); //Analog output -> to filter, pre-amp, etc.
     ADC_Setup(); //Configures inputs for CV, Gate, ADSR inputs
-    int CV_out;
+    short CV_out;
     int key_in;
     int osc;
 

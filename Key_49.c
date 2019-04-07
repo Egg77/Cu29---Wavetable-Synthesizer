@@ -261,44 +261,270 @@ int key_49 (short n)
 
 // Requires: Input voltage (1-5V) from ADC, 8-bit char.
 // Promises: Integer n, with 16 <=n <= 64.
-int ADC_to_key (int ADC_CV)
+int ADC_to_key (short ADC_CV)
 {
   int n;
 
-  if (ADC_CV <= 391 && ADC_CV >= 204) //C2 to B2
+  if (ADC_CV >= 204 && ADC_CV < 409) //C2 to B2
   {
-    n = 16;
-    return key_49(n);
-
+    if(ADC_CV >= 204 && ADC_CV < 221) //C2
+    {
+      n = 16;
+      return key_49(n);
+    }
+    if(ADC_CV >= 221 && ADC_CV < 238) //C#2
+    {
+      n = 17;
+      return key_49(n);
+    }
+    if(ADC_CV >= 238 && ADC_CV < 255) //D2
+    {
+      n = 18;
+      return key_49(n);
+    }
+    if(ADC_CV >= 255 && ADC_CV < 272) //D#2
+    {
+      n = 19;
+      return key_49(n);
+    }
+    if(ADC_CV >= 272 && ADC_CV < 289) //E2
+    {
+      n = 20;
+      return key_49(n);
+    }
+    if(ADC_CV >= 289 && ADC_CV < 306) //F2
+    {
+      n = 21;
+      return key_49(n);
+    }
+    if(ADC_CV >= 306 && ADC_CV < 323) //F#2
+    {
+      n = 22;
+      return key_49(n);
+    }
+    if(ADC_CV >= 323 && ADC_CV < 340) //G2
+    {
+      n = 23;
+      return key_49(n);
+    }
+    if(ADC_CV >= 340 && ADC_CV < 357) //G#2
+    {
+      n = 24;
+      return key_49(n);
+    }
+    if(ADC_CV >= 357 && ADC_CV < 374) //A2
+    {
+      n = 25;
+      return key_49(n);
+    }
+    if(ADC_CV >= 374 && ADC_CV < 391) //A#2
+    {
+      n = 26;
+      return key_49(n);
+    }
+    if(ADC_CV >= 391 && ADC_CV < 409) //B2
+    {
+      n = 27;
+      return key_49(n);
+    }
   }
 
-  if (ADC_CV <= 595 && ADC_CV >= 409) //C3 to B3
-  {
-    n = 28;
-    return key_49(n);
 
+  else if (ADC_CV >= 409 && ADC_CV < 595) //C3 to B3
+  {
+    if(ADC_CV >= 409 && ADC_CV < 425) //C3
+    {
+      n = 28;
+      return key_49(n);
+    }
+    if(ADC_CV >= 425 && ADC_CV < 442) //C#3
+    {
+      n = 29;
+      return key_49(n);
+    }
+    if(ADC_CV >= 442 && ADC_CV < 459) //D3
+    {
+      n = 30;
+      return key_49(n);
+    }
+    if(ADC_CV >= 459 && ADC_CV < 477) //D#3
+    {
+      n = 31;
+      return key_49(n);
+    }
+    if(ADC_CV >= 477 && ADC_CV < 494) //E3
+    {
+      n = 32;
+      return key_49(n);
+    }
+    if(ADC_CV >= 494 && ADC_CV < 510) //F3
+    {
+      n = 33;
+      return key_49(n);
+    }
+    if(ADC_CV >= 510 && ADC_CV < 527) //F#3
+    {
+      n = 34;
+      return key_49(n);
+    }
+    if(ADC_CV >= 527 && ADC_CV < 545) //G3
+    {
+      n = 35;
+      return key_49(n);
+    }
+    if(ADC_CV >= 545 && ADC_CV < 562) //G#3
+    {
+      n = 36;
+      return key_49(n);
+    }
+    if(ADC_CV >= 562 && ADC_CV < 579) //A3
+    {
+      n = 37;
+      return key_49(n);
+    }
+    if(ADC_CV >= 579 && ADC_CV < 595) //A#3
+    {
+      n = 38;
+      return key_49(n);
+    }
+    if(ADC_CV >= 595 && ADC_CV < 613) //B3
+    {
+      n = 39;
+      return key_49(n);
+    }
   }
 
-  if (ADC_CV <= 800 && ADC_CV >= 613) //C4 to B4
+  else if (ADC_CV >= 613 && ADC_CV < 800) //C4 to B4
   {
-    n = 40;
-    return key_49(n);
-
+    if(ADC_CV >= 613 && ADC_CV < 630) //C4
+    {
+      n = 40;
+      return key_49(n);
+    }
+    if(ADC_CV >= 630 && ADC_CV < 647) //C#4
+    {
+      n = 41;
+      return key_49(n);
+    }
+    if(ADC_CV >= 647 && ADC_CV < 664) //D4
+    {
+      n = 42;
+      return key_49(n);
+    }
+    if(ADC_CV >= 664 && ADC_CV < 681) //D#4
+    {
+      n = 43;
+      return key_49(n);
+    }
+    if(ADC_CV >= 681 && ADC_CV < 698) //E4
+    {
+      n = 44;
+      return key_49(n);
+    }
+    if(ADC_CV >= 698 && ADC_CV < 715) //F4
+    {
+      n = 45;
+      return key_49(n);
+    }
+    if(ADC_CV >= 715 && ADC_CV < 732) //F#4
+    {
+      n = 46;
+      return key_49(n);
+    }
+    if(ADC_CV >= 732 && ADC_CV < 749) //G4
+    {
+      n = 47;
+      return key_49(n);
+    }
+    if(ADC_CV >= 749 && ADC_CV < 766) //G#4
+    {
+      n = 48;
+      return key_49(n);
+    }
+    if(ADC_CV >= 766 && ADC_CV < 783) //A4
+    {
+      n = 49;
+      return key_49(n);
+    }
+    if(ADC_CV >= 783 && ADC_CV < 800) //A#4
+    {
+      n = 50;
+      return key_49(n);
+    }
+    if(ADC_CV >= 800 && ADC_CV < 817) //B4
+    {
+      n = 51;
+      return key_49(n);
+    }
   }
 
-  if (ADC_CV <= 1004 && ADC_CV >= 817) //C5 to B5
+  else if (ADC_CV >= 817 && ADC_CV < 1004) //C5 to B5
   {
-    n = 52;
-    return key_49(n);
-
+    if(ADC_CV >= 817 && ADC_CV < 834) //C5
+    {
+      n = 52;
+      return key_49(n);
+    }
+    if(ADC_CV >= 834 && ADC_CV < 851) //C#5
+    {
+      n = 53;
+      return key_49(n);
+    }
+    if(ADC_CV >= 851 && ADC_CV < 868) //D5
+    {
+      n = 54;
+      return key_49(n);
+    }
+    if(ADC_CV >= 868 && ADC_CV < 885) //D#5
+    {
+      n = 55;
+      return key_49(n);
+    }
+    if(ADC_CV >= 885 && ADC_CV < 902) //E5
+    {
+      n = 56;
+      return key_49(n);
+    }
+    if(ADC_CV >= 902 && ADC_CV < 919) //F5
+    {
+      n = 57;
+      return key_49(n);
+    }
+    if(ADC_CV >= 919 && ADC_CV < 936) //F#5
+    {
+      n = 58;
+      return key_49(n);
+    }
+    if(ADC_CV >= 936 && ADC_CV < 953) //G5
+    {
+      n = 59;
+      return key_49(n);
+    }
+    if(ADC_CV >= 953 && ADC_CV < 970) //G#5
+    {
+      n = 60;
+      return key_49(n);
+    }
+    if(ADC_CV >= 970 && ADC_CV < 987) //A5
+    {
+      n = 61;
+      return key_49(n);
+    }
+    if(ADC_CV >= 987 && ADC_CV < 1004) //A#5
+    {
+      n = 62;
+      return key_49(n);
+    }
+    if(ADC_CV >= 1004 && ADC_CV < 1020) //B5
+    {
+      n = 63;
+      return key_49(n);
+    }
   }
 
-  if (ADC_CV >= 1020) //C6
+  else if(ADC_CV >= 1020) //C6
   {
     n = 64;
     return key_49(n);
-
   }
-
-  return n;
 }

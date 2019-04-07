@@ -18,7 +18,7 @@ void ConfigureTimer2(char TimerPeriod_us, char Scalers);
 
 //Setup ADC for reading and write to DAC functions
 void ADC_Setup(void);
-int ADC_CV_Loop(void);
+short ADC_CV_Loop(void);
 void DAC_Setup(void);
 void WriteDAQ(short WriteValue);
 
@@ -30,7 +30,7 @@ short SawArray(int samples);
 
 //Key_49 Functions - Converts ADC input to keys, scales timer2 to key frequencies
 int key_49 (short n);
-int ADC_to_key (int ADC_CV);
+int ADC_to_key (short ADC_CV);
 
 //ADSR Envelope Generator Functions - Controls on/off key signal and Envelope
 void ADSR (short ADC_GATE);
