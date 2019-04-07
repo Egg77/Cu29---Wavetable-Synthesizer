@@ -16,6 +16,7 @@ void main(void)
        CV_out = ADC_CV_Loop();
        key_in = ADC_to_key(CV_out);
        on_off = ADC_GATE_Loop();
+       //This is temporary - will likely change once ADSR is implemented:
        if(on_off == 1) //Only output when a key is pressed
        {
          osc = SineArray(key_in);
