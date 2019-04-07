@@ -20,6 +20,7 @@ void ConfigureTimer2(char TimerPeriod_us, char Scalers);
 //Setup ADC for reading and write to DAC functions
 void ADC_Setup(void);
 short ADC_CV_Loop(void);
+unsigned short ADC_GATE_Loop(void);
 void DAC_Setup(void);
 void WriteDAQ(short WriteValue);
 
@@ -29,7 +30,7 @@ short SineArray(int samples);
 short SquareArray(int samples);
 short SawArray(int samples);
 
-//Key_49 Functions - Converts ADC input to keys, scales timer2 to key frequencies
+//Key_49 Functions - Converts ADC input to keys, scales Timer2 to key frequencies
 int key_49 (short n);
 int ADC_to_key (short ADC_CV);
 
