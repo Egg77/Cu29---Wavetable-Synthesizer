@@ -1,6 +1,8 @@
 #ifndef Cu29_LIBRARY_H
 #define	Cu29_LIBRARY_H
 
+extern unsigned char samples = 1; //Global sample interval for reading from oscillator tables.
+
 // Device configuration
 #pragma config FOSC = INTOSC // Oscillator Selection Bits->INTOSC oscillator: I/O function on CLKIN pin
 #pragma config WDTE = OFF    // Watchdog Timer Enable->WDT disabled
@@ -26,13 +28,13 @@ void WriteDAQ(short WriteValue);
 
 //Oscillators:
 short FreqArray(void);
-short SineArray(int samples);
-short SquareArray(int samples);
-short SawArray(int samples);
+short SineArray(void);
+short SquareArray(void);
+short SawArray(void);
 
 //Key_49 Functions - Converts ADC input to keys, scales Timer2 to key frequencies
-int key_49 (short n);
-int ADC_to_key (short ADC_CV);
+void key_49 (short n);
+void ADC_to_key (short ADC_CV);
 
 //ADSR Envelope Generator Functions - Controls on/off key signal and Envelope
 void ADSR (short ADC_GATE);
@@ -40,5 +42,8 @@ void attack (short ADC_GATE, short ADC_attack);
 void decay (short ADC_GATE, short ADC_decay);
 void sustain (short ADC_GATE, short ADC_sustain);
 void release (short ADC_GATE, short ADC_release);
+
+//Configure PIC PWM Output for use with Buck Booster Circuit:
+void PWM_setup (void);
 
 #endif

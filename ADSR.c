@@ -1,5 +1,7 @@
 #include "Cu29_Library.h"
 
+//Note: Each potentiometer will be outputting 0V to 4.8V - program accordingly.
+
 ////Requires: ADC_Gate input (short)
 ////Promises: Master envelope function for use in main
 //void ADSR (short ADC_GATE)

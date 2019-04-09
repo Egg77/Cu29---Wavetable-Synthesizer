@@ -1,6 +1,15 @@
 #include "Cu29_Library.h"
 
 //Requires: Nothing.
+//Promises: Sets up the DAC for output on Port A.
+void DAC_Setup(void)
+{
+    BSR = 0xB;
+    DAC1CON0 = 0xA0;
+    TRISAbits.TRISA2 = 0;
+}
+
+//Requires: Nothing.
 //Promises: Sets up ADC
 void ADC_Setup(void)
 {
@@ -31,43 +40,34 @@ void ADC_Setup(void)
 short ADC_CV_Loop(void)
 {
     short result;
-    char high;
-    char low;
+    short high;
+    short low;
 
     ADCON0bits.CHS = 0b00000; //Select Channel 0 (ie. PIN RA0)
     __delay_us(2); //Setup time
     ADCON0bits.GO = 1; //Set GO/DONE bit to 1
     while(ADCON0bits.GO == 1);//Wait for completion poll GO/DONE bit
 
-    high = ADRESH << 8;
+    high = ADRESH;
+    high = high << 8;
     low = ADRESL;
-    result = high || low;
+    result = high | low;
 
-    return result; //Return ADRESH+ADRESL
+    return result;
 }
 
 //Requires: Nothing.
 //Promises: Reads ADC input from channel 1 (pin RAx) from external GATE,returns
 //          1 or 0, for on or off respectively.
-
 unsigned short ADC_GATE_Loop(void)
 {
   ADCON0bits.CHS = 0b00001; //Select Channel 1 (ie. PIN RA1)
-  _delay_us(2); //Setup time
+  __delay_us(2); //Setup time
   ADCON0bits.GO = 1; //Set GO/DONE bit to 1
   while(ADCON0bits.GO == 1); //Wait for completion poll GO/DONE bit
 
   if(ADRESH != 0) return 1;
   if(ADRESH == 0) return 0;
-}
-
-//Requires: Nothing.
-//Promises: Sets up the DAC for output on Port A.
-void DAC_Setup(void)
-{
-    BSR = 0xB;
-    DAC1CON0 = 0xA0;
-    TRISAbits.TRISA2 = 0; //Changed to disable input on RA2 only. If things mess up, check this!
 }
 
 //Requires: Short type value to write to DAC1

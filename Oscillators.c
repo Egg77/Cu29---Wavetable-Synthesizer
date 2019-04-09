@@ -2,7 +2,7 @@
 
 //Requires: A sample-rate scaler, input values either 1, 2, 4
 //Promises: Values corresponding to a sine waveform
-short SineArray(int samples)
+short SineArray(void)
 {
    static char ArrayIndex = 0;
    const short Array [] =
@@ -28,7 +28,7 @@ short SineArray(int samples)
 
 //Requires: A sample-rate scaler, input values either 1, 2, 4
 //Promises: Values corresponding to a square waveform
-short SquareArray(int samples)
+short SquareArray(void)
 {
    static char ArrayIndex = 0;
    const short Array [] =
@@ -53,7 +53,7 @@ short SquareArray(int samples)
 
 //Requires: A sample-rate scaler, input values either 1, 2, 4
 //Promises: Values corresponding to a sawtooth waveform
-short SawArray(int samples)
+short SawArray(void)
 {
    static char ArrayIndex = 0;
    const short Array [] =
