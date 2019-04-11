@@ -5,32 +5,38 @@
 // PROMISES: Set the system clock speed to 32MHz.
 //           Configure Timer2 to trigger with the given period in microseconds.
 //           Start Timer2. It will automatically restart when it finishes.
-void ConfigureTimer2(char TimerPeriod_us, char Scalers)
+void SetupTimer2()
 {
     //Set the system clock speed to 32MHz.
-    OSCCON = 0xF4;
+    OSCCON = 0xF0;
 
     //Wait for the oscillator to switch to its new speed.
     while(OSCSTATbits.HFIOFR == 0);
 
-    //T2PR: TMR2 PERIOD REGISTER (Page 287)
-    T2PR = TimerPeriod_us;
+    //T2PR: TMR2 PERIOD REGISTER
+    T2PR = 119;
 
-    // T2CLKCON: TIMER2 CLOCK SELECTION REGISTER (Page 306))
-    // Bits 8:4 = 0b00000   These bits are not implemented
-    // Bits 3:0 = 0b0010    Clock source is the system clock
+    // T2CLKCON: TIMER2 CLOCK SELECTION REGISTER
     T2CLKCON = 0x02;
 
-    // T2CON: TIMERx CONTROL REGISTER (Page 307)
-    // Bit  7   = 0b1       Timer is on.
-    // Bits 6:4 = 0b101     Prescaler is 1:32 (Timer increments every 32 cycles)
-    // Bits 3:0 = 0b0000    Postscaler is 1:1
-    T2CON = Scalers;
+    // T2CON: TIMERx CONTROL REGISTER
+    T2CON = 0xb0;
 
     // TMR2IF is an interrupt flag, and is set whenever Timer2 expires.
     // We are not using interrupts, but it can still be checked manually.
     // It is cleared here as we start the timer.
-    PIR1bits.TMR2IF = 0;
+    //PIR1bits.TMR2IF = 0;
 
+    return;
+}
+
+void ConfigureTimer2(char TimerPeriod_us, char Scalers)
+{
+    //T2PR: TMR2 PERIOD REGISTER
+    T2PR = TimerPeriod_us;
+    
+    //T2CON: TIMERx CONTROL REGISTER
+    T2CON = Scalers;
+    
     return;
 }

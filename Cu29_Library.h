@@ -1,7 +1,7 @@
 #ifndef Cu29_LIBRARY_H
 #define	Cu29_LIBRARY_H
 
-extern unsigned char samples = 1; //Global sample interval for reading from oscillator tables.
+extern unsigned char samples = 2; //Global sample interval for reading from oscillator tables.
 
 // Device configuration
 #pragma config FOSC = INTOSC // Oscillator Selection Bits->INTOSC oscillator: I/O function on CLKIN pin
@@ -17,6 +17,7 @@ extern unsigned char samples = 1; //Global sample interval for reading from osci
 #define _XTAL_FREQ 32000000
 
 //Timer:
+void SetupTimer2(void);
 void ConfigureTimer2(char TimerPeriod_us, char Scalers);
 
 //Setup ADC for reading and write to DAC functions
