@@ -19,10 +19,6 @@ void ADC_Setup(void)
   TRISAbits.TRISA0 = 1; //Disable PIN RA0 output driver
   ANSA0 = 1; //Configure PIN RA0 as analog
   WPUA0 = 0; //Disable weak pull-ups
-  PIR1bits.ADIF = 0; //Clear ADC interrupt flag
-  PIE1bits.ADIE = 1; //Enable ADC interrupt...
-  INTCONbits.PEIE = 1; //Peripheral interrupt enable
-  INTCONbits.GIE = 1; //Enable global interrupt
 
 
   //Pin Rxx, Channel x - x Input:
