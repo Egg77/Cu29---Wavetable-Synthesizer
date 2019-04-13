@@ -48,7 +48,7 @@ short ADC_CV_Loop(void)
     __delay_us(2); //Setup time
     ADCON0bits.GO = 1; //Set GO/DONE bit to 1
     
-    //while(ADCON0bits.GO == 1)
+    while(ADCON0bits.GO == 1);
     
     high = ADRESH;
     high = high << 8;
