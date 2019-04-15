@@ -18,7 +18,7 @@ void ADC_Setup(void)
   //Pin RA0, Channel 0 - CV Input:
   TRISAbits.TRISA0 = 1; //Disable PIN RA0 output driver
   ANSA0 = 1; //Configure PIN RA0 as analog
-  WPUA0 = 0; //Disable weak pull-ups
+  WPUA0 = 0; //Disable weak pull-ups,
 
 
   //Pin Rxx, Channel x - x Input:
@@ -44,7 +44,7 @@ short ADC_CV_Loop(void)
     __delay_us(2); //Setup time
     ADCON0bits.GO = 1; //Set GO/DONE bit to 1
     
-    while(ADCON0bits.GO == 1);
+    while(ADCON0bits.GO == 1); 
     
     high = ADRESH;
     high = high << 8;

@@ -1,56 +1,3 @@
-#if 1 
-
-#include "Cu29_Library.h"
-
-void ADC_to_key (short ADC_CV)
-{    
-   
-    // 1. If the ADC value is below 39, return without doing anything.
-    if (ADC_CV < 39) return;
-        
-    // 2. Convert the ADC reading into an index. Index = (ADC-203)/17
-    //    We use a while loop instead of dividing, because division is SLOW.
-    char index = 0;
-    ADC_CV = ADC_CV - 39;
-    
-    while(ADC_CV > 3)
-    {
-        ADC_CV = ADC_CV - 3;
-        index++;
-    }
-    
-    // 3. Check how many samples to skip.
-    if (index > 34) samples = 4;
-    else if(index > 23) samples = 2;
-    else samples = 1;
-        
-    // 4. Calculate the appropriate timer scale value.
-    char timerScale = 0xB0;
-    if (index > 34) timerScale = 0xA0;
-    
-    // 5. Look up the appropriate period using an array.
-    const char periodArray[] = {
-        239, 225, 213, 201, 190, 179, 169, 159, 
-        150, 142, 134, 127, 119, 113, 106, 100, 
-         95,  89,  84,  80,  75,  71,  67,  63, 
-        119, 113, 106, 100,  95,  89,  84,  80, 
-         75,  71,  67, 253, 239, 225, 213, 201, 
-        190, 179, 169, 159, 150, 142, 134, 127, 
-        119
-    };
-    
-    char timerPeriod = periodArray[index];
-    
-    // 6. Apply the selected values to the timer.
-    T2PR = timerPeriod;
-    T2CON = timerScale;
-    PIR1bits.TMR2IF = 0;
-    
-    
-}
-
-#else 
-
 #include "Cu29_Library.h"
 
 // Requires: Short type input representing a key, ranging from 16 to 64
@@ -152,33 +99,33 @@ void key_49 (short n)
           break;
 
       case 34: //F#3, 185.00 Hz
-          ConfigureTimer2(84,0xb0);//TimerPeriod_us, T2CLKCON
-          samples = 1; //Samples
+          ConfigureTimer2(169,0xb0);//TimerPeriod_us, T2CLKCON
+          samples = 2; //Samples
           break;
 
       case 35: //G3, 196.00 Hz
-          ConfigureTimer2(80,0xb0);//TimerPeriod_us, T2CLKCON
-          samples = 1; //Samples
+          ConfigureTimer2(159,0xb0);//TimerPeriod_us, T2CLKCON
+          samples = 2; //Samples
           break;
 
       case 36: //G#3, 207.65 Hz
-          ConfigureTimer2(75,0xb0);//TimerPeriod_us, T2CLKCON
-          samples = 1; //Samples
+          ConfigureTimer2(150,0xb0);//TimerPeriod_us, T2CLKCON
+          samples = 2; //Samples
           break;
 
       case 37: //A3, 220.00 Hz
-          ConfigureTimer2(71,0xb0);//TimerPeriod_us, T2CLKCON
-          samples = 1; //Samples
+          ConfigureTimer2(142,0xb0);//TimerPeriod_us, T2CLKCON
+          samples = 2; //Samples
           break;
 
       case 38: //A#3, 233.08 Hz
-          ConfigureTimer2(67,0xb0);//TimerPeriod_us, T2CLKCON
-          samples = 1; //Samples
+          ConfigureTimer2(134,0xb0);//TimerPeriod_us, T2CLKCON
+          samples = 2; //Samples
           break;
 
       case 39: //B3, 246.94 Hz
-          ConfigureTimer2(63,0xb0);//TimerPeriod_us, T2CLKCON
-          samples = 1; //Samples
+          ConfigureTimer2(127,0xb0);//TimerPeriod_us, T2CLKCON
+          samples = 2; //Samples
           break;
 
       case 40: //C4, 261.63 Hz
@@ -277,103 +224,103 @@ void key_49 (short n)
           break;
 
       case 59: //G5, 783.99 Hz
-          ConfigureTimer2(159,0xa0);//TimerPeriod_us, T2CLKCON
-          samples = 4; //Samples
+          ConfigureTimer2(159,0xa1);//TimerPeriod_us, T2CLKCON
+          samples = 8; //Samples
           break;
 
       case 60: //G#5, 830.61 Hz
-          ConfigureTimer2(150,0xa0);//TimerPeriod_us, T2CLKCON
-          samples = 4; //Samples
+          ConfigureTimer2(150,0xa1);//TimerPeriod_us, T2CLKCON
+          samples = 8; //Samples
           break;
 
       case 61: //A5, 880.00 Hz
-          ConfigureTimer2(142,0xa0);//TimerPeriod_us, T2CLKCON
-          samples = 4; //Samples
+          ConfigureTimer2(142,0xa1);//TimerPeriod_us, T2CLKCON
+          samples = 8; //Samples
           break;
 
       case 62: //A#5, 932.33 Hz
-          ConfigureTimer2(134,0xa0);//TimerPeriod_us, T2CLKCON
-          samples = 4; //Samples
+          ConfigureTimer2(134,0xa1);//TimerPeriod_us, T2CLKCON
+          samples = 8; //Samples
           break;
 
       case 63: //B5, 987.77 Hz
-          ConfigureTimer2(127,0xa0);//TimerPeriod_us, T2CLKCON
-          samples = 4; //Samples
+          ConfigureTimer2(127,0xa1);//TimerPeriod_us, T2CLKCON
+          samples = 8; //Samples
           break;
 
       case 64: //C6, 1046.50 Hz
-          ConfigureTimer2(119,0xa0);//TimerPeriod_us, T2CLKCON
-          samples = 4; //Samples
+          ConfigureTimer2(119,0xa1);//TimerPeriod_us, T2CLKCON
+          samples = 8; //Samples
           break;
       }
 }
 
-// Requires: Input voltage (1-5V) from ADC, 8-bit char.
+// Requires: Input voltage (0.5-2.5V) from ADC, 8-bit char.
 // Promises: Integer n, with 16 <=n <= 64.
 void ADC_to_key (short ADC_CV)
 {
   int n;
 
-  if(ADC_CV < 39) return;
+  //if(ADC_CV < 108) return;
 
-  if (ADC_CV >= 39 && ADC_CV < 75) //C2 to B2
+  if (ADC_CV >= 108 && ADC_CV < 216) //C2 to B2
   {
-    if(ADC_CV >= 39 && ADC_CV < 42) //C2
+    if(ADC_CV >= 108 && ADC_CV < 115) //C2
     {
       n = 16;
       key_49(n);
     }
-    else if(ADC_CV >= 42 && ADC_CV < 45) //C#2
+    else if(ADC_CV >= 117 && ADC_CV < 125) //C#2
     {
       n = 17;
       key_49(n);
     }
-    else if(ADC_CV >= 45 && ADC_CV < 48) //D2
+    else if(ADC_CV >= 126 && ADC_CV < 135) //D2
     {
       n = 18;
       key_49(n);
     }
-    if(ADC_CV >= 48 && ADC_CV < 51) //D#2
+    if(ADC_CV >= 136 && ADC_CV < 144) //D#2
     {
       n = 19;
       key_49(n);
     }
-    else if(ADC_CV >= 51 && ADC_CV < 554) //E2
+    else if(ADC_CV >= 145 && ADC_CV < 153) //E2
     {
       n = 20;
       key_49(n);
     }
-    else if(ADC_CV >= 54 && ADC_CV < 57) //F2
+    else if(ADC_CV >= 154 && ADC_CV < 162) //F2
     {
       n = 21;
       key_49(n);
     }
-    else if(ADC_CV >= 57 && ADC_CV < 60) //F#2
+    else if(ADC_CV >= 163 && ADC_CV < 171) //F#2
     {
       n = 22;
       key_49(n);
     }
-    else if(ADC_CV >= 60 && ADC_CV < 63) //G2
+    else if(ADC_CV >= 172 && ADC_CV < 180) //G2
     {
       n = 23;
       key_49(n);
     }
-    else if(ADC_CV >= 63 && ADC_CV < 66) //G#2
+    else if(ADC_CV >= 181 && ADC_CV < 189) //G#2
     {
       n = 24;
       key_49(n);
     }
-    else if(ADC_CV >= 66 && ADC_CV < 69) //A2
+    else if(ADC_CV >= 190 && ADC_CV < 198) //A2
     {
       n = 25;
       key_49(n);
     }
-    else if(ADC_CV >= 69 && ADC_CV < 72) //A#2
+    else if(ADC_CV >= 199 && ADC_CV < 206) //A#2
     {
       n = 26;
       key_49(n);
     }
-    else if(ADC_CV >= 72 && ADC_CV < 75) //B2
+    else if(ADC_CV >= 207 && ADC_CV < 215) //B2
     {
       n = 27;
       key_49(n);
@@ -381,203 +328,202 @@ void ADC_to_key (short ADC_CV)
   }
 
 
-  else if (ADC_CV >= 75 && ADC_CV < 111) //C3 to B3
+  else if (ADC_CV >= 216 && ADC_CV < 324) //C3 to B3
   {
-    if(ADC_CV >= 75 && ADC_CV < 78) //C3
+    if(ADC_CV >= 216 && ADC_CV < 225) //C3
     {
       n = 28;
       key_49(n);
     }
-    else if(ADC_CV >= 78 && ADC_CV < 81) //C#3
+    else if(ADC_CV >= 225 && ADC_CV < 235) //C#3
     {
       n = 29;
       key_49(n);
     }
-    else if(ADC_CV >= 81 && ADC_CV < 84) //D3
+    else if(ADC_CV >= 235 && ADC_CV < 243) //D3
     {
       n = 30;
       key_49(n);
     }
-    else if(ADC_CV >= 84 && ADC_CV < 87) //D#3
+    else if(ADC_CV >= 243 && ADC_CV < 252) //D#3
     {
       n = 31;
       key_49(n);
     }
-    else if(ADC_CV >= 87 && ADC_CV < 90) //E3
+    else if(ADC_CV >= 252 && ADC_CV < 261) //E3
     {
       n = 32;
       key_49(n);
     }
-    else if(ADC_CV >= 90 && ADC_CV < 93) //F3
+    else if(ADC_CV >= 262 && ADC_CV < 268) //F3
     {
       n = 33;
       key_49(n);
     }
-    else if(ADC_CV >= 93 && ADC_CV < 96) //F#3
+    else if(ADC_CV >= 271 && ADC_CV < 279) //F#3
     {
       n = 34;
       key_49(n);
     }
-    else if(ADC_CV >= 96 && ADC_CV < 99) //G3
+    else if(ADC_CV >= 279 && ADC_CV < 288) //G3
     {
       n = 35;
       key_49(n);
     }
-    else if(ADC_CV >= 99 && ADC_CV < 102) //G#3
+    else if(ADC_CV >= 288 && ADC_CV < 297) //G#3
     {
       n = 36;
       key_49(n);
     }
-    else if(ADC_CV >= 102 && ADC_CV < 105) //A3
+    else if(ADC_CV >= 297 && ADC_CV < 306) //A3
     {
       n = 37;
       key_49(n);
     }
-    else if(ADC_CV >= 105 && ADC_CV < 108) //A#3
+    else if(ADC_CV >= 306 && ADC_CV < 315) //A#3
     {
       n = 38;
       key_49(n);
     }
-    else if(ADC_CV >= 108 && ADC_CV < 111) //B3
+    else if(ADC_CV >= 315 && ADC_CV < 324) //B3
     {
       n = 39;
       key_49(n);
     }
   }
 
-  else if (ADC_CV >= 111 && ADC_CV < 147) //C4 to B4
+  else if (ADC_CV >= 324 && ADC_CV < 433) //C4 to B4
   {
-    if(ADC_CV >= 111 && ADC_CV < 114) //C4
+    if(ADC_CV >= 324 && ADC_CV < 334) //C4
     {
       n = 40;
       key_49(n);
     }
-    else if(ADC_CV >= 114 && ADC_CV < 117) //C#4
+    else if(ADC_CV >= 334 && ADC_CV < 342) //C#4
     {
       n = 41;
       key_49(n);
     }
-    else if(ADC_CV >= 117 && ADC_CV < 120) //D4
+    else if(ADC_CV >= 342 && ADC_CV < 351) //D4
     {
       n = 42;
       key_49(n);
     }
-    else if(ADC_CV >= 120 && ADC_CV < 123) //D#4
+    else if(ADC_CV >= 351 && ADC_CV < 361) //D#4
     {
       n = 43;
       key_49(n);
     }
-    else if(ADC_CV >= 123 && ADC_CV < 126) //E4
+    else if(ADC_CV >= 361 && ADC_CV < 371) //E4
     {
       n = 44;
       key_49(n);
     }
-    else if(ADC_CV >= 126 && ADC_CV < 129) //F4
+    else if(ADC_CV >= 371 && ADC_CV < 380) //F4
     {
       n = 45;
       key_49(n);
     }
-    else if(ADC_CV >= 129 && ADC_CV < 132) //F#4
+    else if(ADC_CV >= 380 && ADC_CV < 389) //F#4
     {
       n = 46;
       key_49(n);
     }
-    else if(ADC_CV >= 132 && ADC_CV < 135) //G4
+    else if(ADC_CV >= 389 && ADC_CV < 397) //G4
     {
       n = 47;
       key_49(n);
     }
-    else if(ADC_CV >= 135 && ADC_CV < 138) //G#4
+    else if(ADC_CV >= 397 && ADC_CV < 407) //G#4
     {
       n = 48;
       key_49(n);
     }
-    else if(ADC_CV >= 138 && ADC_CV < 141) //A4
+    else if(ADC_CV >= 407 && ADC_CV < 416) //A4
     {
       n = 49;
       key_49(n);
     }
-    else if(ADC_CV >= 141 && ADC_CV < 144) //A#4
+    else if(ADC_CV >= 416 && ADC_CV < 425) //A#4
     {
       n = 50;
       key_49(n);
     }
-    else if(ADC_CV >= 144 && ADC_CV < 147) //B4
+    else if(ADC_CV >= 425 && ADC_CV < 433) //B4
     {
       n = 51;
       key_49(n);
     }
   }
 
-  else if (ADC_CV >= 147 && ADC_CV < 183) //C5 to B5
+  else if (ADC_CV >= 433 && ADC_CV < 537) //C5 to B5
   {
-    if(ADC_CV >= 147 && ADC_CV < 150) //C5
+    if(ADC_CV >= 433 && ADC_CV < 442) //C5
     {
       n = 52;
       key_49(n);
     }
-    else if(ADC_CV >= 150 && ADC_CV < 153) //C#5
+    else if(ADC_CV >= 442 && ADC_CV < 452) //C#5
     {
       n = 53;
       key_49(n);
     }
-    else if(ADC_CV >= 153 && ADC_CV < 156) //D5
+    else if(ADC_CV >= 452 && ADC_CV < 460) //D5
     {
       n = 54;
       key_49(n);
     }
-    else if(ADC_CV >= 156 && ADC_CV < 159) //D#5
+    else if(ADC_CV >= 460 && ADC_CV < 469) //D#5
     {
       n = 55;
       key_49(n);
     }
-    else if(ADC_CV >= 159 && ADC_CV < 162) //E5
+    else if(ADC_CV >= 469 && ADC_CV < 478) //E5
     {
       n = 56;
       key_49(n);
     }
-    else if(ADC_CV >= 162 && ADC_CV < 165) //F5
+    else if(ADC_CV >= 478 && ADC_CV < 487) //F5
     {
       n = 57;
       key_49(n);
     }
-    else if(ADC_CV >= 165 && ADC_CV < 168) //F#5
+    else if(ADC_CV >= 487 && ADC_CV < 497) //F#5
     {
       n = 58;
       key_49(n);
     }
-    else if(ADC_CV >= 168 && ADC_CV < 171) //G5
+    else if(ADC_CV >= 497 && ADC_CV < 507) //G5
     {
       n = 59;
       key_49(n);
     }
-    else if(ADC_CV >= 171 && ADC_CV < 174) //G#5
+    else if(ADC_CV >= 507 && ADC_CV < 516) //G#5
     {
       n = 60;
       key_49(n);
     }
-    else if(ADC_CV >= 174 && ADC_CV < 177) //A5
+    else if(ADC_CV >= 516 && ADC_CV < 525) //A5
     {
       n = 61;
       key_49(n);
     }
-    else if(ADC_CV >= 177 && ADC_CV < 180) //A#5
+    else if(ADC_CV >= 525 && ADC_CV < 534) //A#5
     {
       n = 62;
       key_49(n);
     }
-    else if(ADC_CV >= 180 && ADC_CV < 183) //B5
+    else if(ADC_CV >= 534 && ADC_CV < 536) //B5
     {
       n = 63;
       key_49(n);
     }
   }
 
-  else if(ADC_CV >= 183) //C6
+  else if(ADC_CV >= 539) //C6
   {
     n = 64;
     key_49(n);
     return;
   }
 }
-#endif
