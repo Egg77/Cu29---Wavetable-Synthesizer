@@ -11,72 +11,55 @@ void main(void)
     unsigned char key_count1 = 0;
     unsigned char key_count2 = 0;
     short on_off; //Stores if any key is on or off (1 or 0)
-    int osc; //Stores current value of output oscillator
+    char button = 0; //Selects between oscillators - 0 = square, 1 = sawtooth
+    char prevstate;
+    char test = 0;
+    short osc; //Stores current value of output oscillator
 
-    //Function test loop
-    #if 0
-    TRISCbits.TRISC6 = 0;
-    while(1)
-    {
-         RC6 = 1;
-         //Put function to test here
-         RC6 = 0;
-    }
-    #endif
 
     //Main loop
-    #if 1
     while (1)
     {
-       on_off = RA1; //Check if key is pressed.
+       if(PORTAbits.RA3 != prevstate && PORTAbits.RA3 != 1)
+       {   if(button==2) button = 0;
+           else button++;
+       }
+       prevstate = PORTAbits.RA3;
+       test = PORTAbits.RA3;
 
+       on_off = RA1; //Check if key is pressed.
        if(on_off == 1)
        {
-         //Gate OFF portion of loop is used to pre-calculate slower parameters that
-         //do not need to be adjusted during note playback. This includes waveform selection
-         //and all ADSR parameters.
+         //One cycle is used to pre-calculate slower parameters that do not
+         //need to be adjusted during note playback.
 
          CV_out = ADC_CV_Loop(); //27us, 4us without waiting for GO
          CV_temp = CV_out;
-
-         //Look up timer value corresponding to key frequency, set the timer
          ADC_to_key(CV_out); //55us
 
+         //Playback Loop:
          while(on_off == 1) //Play note as long as key is pressed
          {
+           if(button == 0) osc = SquareArray(); //4.6us
+           if(button == 1) osc = SawArray(); //4.6us
+           WriteDAQ(osc); //3.3us
+
+           //Check if CV has changed every 512 cycles for re-trigger support
            if(key_count1 < 255) key_count1++;
            else if (key_count1 == 255 && key_count2 < 255) key_count2++;
            if(key_count1 == 255 && key_count2 == 255)
            {
-            short high; //Consider converting these to chars and only using high for this part
-            short low;
-
-            ADCON0bits.CHS = 0b00000; //Select Channel 0 (ie. PIN RA0)
-            __delay_us(2); //Setup time
-            ADCON0bits.GO = 1; //Set GO/DONE bit to 1
-
-            while(ADCON0bits.GO == 1);
-
-            high = ADRESH;
-            high = high << 8;
-            low = ADRESL;
-            CV_out = high | low;
-            key_count1 = 0;
-            key_count2 = 0;
-            if(CV_out != CV_temp) break;
+              CV_out = ADC_CV_Loop();
+              key_count1 = 0;
+              key_count2 = 0;
+              if(CV_out != CV_temp) break;
            }
-
-           osc = SineArray(); //4.6us
-           WriteDAQ(osc); //3.3us
-
-
+           //Wait for Timer2 to end:
            while(!PIR1bits.TMR2IF);
            PIR1bits.TMR2IF = 0;
-           on_off = RA1; //Check if key is still pressed.
+           on_off = RA1;
          }
        }
     }
-    #endif
-
     return;
 }
