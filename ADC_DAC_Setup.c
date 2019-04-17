@@ -10,6 +10,7 @@ void DAC_Setup(void)
     TRISAbits.TRISA2 = 0;
     TRISAbits.TRISA3 = 1;
     ANSA1 = 0;
+    ANSA3 = 0;
 }
 
 //Requires: Nothing.

@@ -2,8 +2,6 @@
 #define	Cu29_LIBRARY_H
 
 extern unsigned char samples = 2; //Global sample interval for reading from oscillator tables.
-extern unsigned char shift = 0; //Global shift value for scaling amplitude
-                                //0 shift = maximum amplitude
 
 // Device configuration
 #pragma config FOSC = INTOSC // Oscillator Selection Bits->INTOSC oscillator: I/O function on CLKIN pin
